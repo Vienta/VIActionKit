@@ -18,4 +18,10 @@
     return action;
 }
 
+- (void)stopAllActions
+{
+    [[SSActionManager sharedSSActionManager] removeAllActionsFromTarget:self];
+    [self.layer removeAllAnimations];
+}
+
 @end

@@ -29,16 +29,23 @@
     
     UIView *tTarget = (id)target;
     
-    NSLog(@"action = %@", action);
-        [CATransaction begin];
+    [CATransaction begin];
     [CATransaction setDisableActions:YES];
-        [CATransaction setCompletionBlock:^{
-            NSLog(@"animation complete");
-        }];
-        [tTarget.layer addAnimation:action forKey:nil];
-        [CATransaction commit];
+    [CATransaction setCompletionBlock:^{
+        NSLog(@"animation complete");
+    }];
+    [tTarget.layer addAnimation:action forKey:nil];
+    [CATransaction commit];
 }
 
+- (void)removeAllActionsFromTarget:(id)target;
+{
+    NSAssert(target != nil, @"Target can not be nil");
+    
+    UIView *tTarget = (id)target;
+    
+    [tTarget.layer removeAllAnimations];
+}
 
 void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
     NSMutableArray *bezierPoints = (__bridge NSMutableArray *)info;
@@ -70,6 +77,7 @@ void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
             break;
     }
 }
+
 
 
 @end

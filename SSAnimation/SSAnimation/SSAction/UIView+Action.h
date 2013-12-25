@@ -11,4 +11,6 @@
 
 @interface UIView (Action)
 - (id)runAction:(SSAction *)action;
+- (void)stopAllActions;
+
 @end

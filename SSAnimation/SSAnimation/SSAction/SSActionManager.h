@@ -15,4 +15,6 @@
 
 - (void)addAction:(SSAction *)action target:(id)target;
 
+- (void)removeAllActionsFromTarget:(id)target;
+
 @end

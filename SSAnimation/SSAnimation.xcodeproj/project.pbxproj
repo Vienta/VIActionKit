@@ -23,7 +23,7 @@
 		B3C7CC1F186AB16C00893D30 /* SSAction.m in Sources */ = {isa = PBXBuildFile; fileRef = B3C7CC1E186AB16C00893D30 /* SSAction.m */; };
 		B3C7CC22186AB1E600893D30 /* SSActionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B3C7CC21186AB1E600893D30 /* SSActionManager.m */; };
 		B3C7CC26186AB49500893D30 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B3C7CC24186AB49500893D30 /* ViewController.m */; };
-		B3C7CC27186AB49500893D30 /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B3C7CC25186AB49500893D30 /* ViewController.xib */; };
+		B3CB793A186B14DA00B4A518 /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B3CB7939186B14DA00B4A518 /* ViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,7 +61,7 @@
 		B3C7CC21186AB1E600893D30 /* SSActionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSActionManager.m; sourceTree = "<group>"; };
 		B3C7CC23186AB49500893D30 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		B3C7CC24186AB49500893D30 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		B3C7CC25186AB49500893D30 /* ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ViewController.xib; sourceTree = "<group>"; };
+		B3CB7939186B14DA00B4A518 /* ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,7 +126,7 @@
 				B3C7CBFA186AB0E100893D30 /* AppDelegate.m */,
 				B3C7CC23186AB49500893D30 /* ViewController.h */,
 				B3C7CC24186AB49500893D30 /* ViewController.m */,
-				B3C7CC25186AB49500893D30 /* ViewController.xib */,
+				B3CB7939186B14DA00B4A518 /* ViewController.xib */,
 				B3C7CBFC186AB0E100893D30 /* Images.xcassets */,
 				B3C7CBF1186AB0E100893D30 /* Supporting Files */,
 			);
@@ -251,7 +251,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B3C7CBF5186AB0E100893D30 /* InfoPlist.strings in Resources */,
-				B3C7CC27186AB49500893D30 /* ViewController.xib in Resources */,
+				B3CB793A186B14DA00B4A518 /* ViewController.xib in Resources */,
 				B3C7CBFD186AB0E100893D30 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
