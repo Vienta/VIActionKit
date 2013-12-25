@@ -20,7 +20,7 @@ You can just as simple as possible to drag and drop the <i>/SSAction</i> folder 
 
 <br />
 <center>
-	<img src="/Users/vienta/GitHub/SSAnimation/IMG_0343.PNG">
+	<img src="https://raw.github.com/Vienta/SSAnimation/master/IMG_0343.PNG">
 </center>
 <br />
 
