@@ -45,58 +45,18 @@
 }
 - (IBAction)clickSequenceBtn:(id)sender
 {
-    CABasicAnimation *fadeInAnimation = [CABasicAnimation animationWithKeyPath:@"opacity"];
-    fadeInAnimation.toValue = @.8;
-    fadeInAnimation.beginTime = 0;
-    fadeInAnimation.duration = 3;
-    fadeInAnimation.fillMode = kCAFillModeBoth;
-    fadeInAnimation.removedOnCompletion = NO;
-
-    CAKeyframeAnimation *moveAnimation = [CAKeyframeAnimation animationWithKeyPath:@"position"];
-    moveAnimation.beginTime = 3;
-    moveAnimation.duration = 3;
-    CGMutablePathRef path = CGPathCreateMutable();
-    CGPathMoveToPoint(path, NULL, 100, 100);
-    CGPathAddLineToPoint(path, NULL, 200, 200);
-    moveAnimation.path = path;
-    moveAnimation.fillMode = kCAFillModeForwards;
-    moveAnimation.removedOnCompletion = NO;
-    CGPathRelease(path);
     
-    
-    CAAnimationGroup *actionGroup = [CAAnimationGroup animation];
-    [actionGroup setDuration:6];
-    [actionGroup setAnimations:@[fadeInAnimation,moveAnimation]];
-    actionGroup.fillMode = kCAFillModeForwards;
-    actionGroup.removedOnCompletion = NO;
-    
-    [CATransaction begin];
-    
-    
-    NSLog(@"testView start center %@", NSStringFromCGPoint(testView.center));
-    [CATransaction setCompletionBlock:^{
-        CGFloat radians = atan2f(testView.transform.b, testView.transform.a);
-        [[testView layer] presentationLayer];
-        NSLog(@"radians %f", radians);
-        
-        CGFloat rotationAngle = [[[testView.layer presentationLayer] valueForKeyPath:@"transform.rotation.z"] floatValue];
-        CGFloat degrees = rotationAngle * (180 / M_PI);
-        NSLog(@"degrees %f", degrees);
-        
-        NSLog(@"testView end center %@", NSStringFromCGPoint(testView.center));
-        CALayer *layer = [testView.layer presentationLayer];
-        NSLog(@"test presenterLayer center %@", NSStringFromCGPoint(layer.position));
-        
-        CGFloat scale = [[layer valueForKeyPath:@"transform.scale"] floatValue];
-        NSLog(@"scale = %f", scale);
-        
-        CGFloat opacity = layer.opacity;
-        NSLog(@"opacity = %f", opacity);
-    }];
-    
-    [testView.layer addAnimation:actionGroup forKey:nil];
-    
-    [CATransaction commit];
+    [testView runAction:[SSSequence actions:
+                         [SSMove actionWithDuration:4 from:testView.center to:CGPointMake(self.view.center.x, self.view.center.y - 100)],
+                         [SSRotate actionWithDuration:4 degree:45],
+                         [SSFadeOut actionWithDuration:4],
+                         [SSFadeIn actionWithDuration:4],
+                         [SSDelayTime actionWithDuration:4],
+                         [SSScale actionWithDuration:4 scale:1.5],
+                         [SSScale actionWithDuration:4 scale:1],
+                         [SSMove actionWithDuration:4 from:CGPointMake(self.view.center.x, self.view.center.y - 100) to:self.view.center],
+                         [SSRotate actionWithDuration:4 degree:0],
+                         nil]];
 }
 
 - (IBAction)clickSameTimeBtn:(id)sender
