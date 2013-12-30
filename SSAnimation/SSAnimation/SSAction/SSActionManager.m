@@ -46,6 +46,7 @@
     NSAssert(target != nil, @"Target can not be nil");
     
     UIView *tTarget = (id)target;
+    [self decorateTarget:tTarget];
     [tTarget.layer removeAllAnimations];
 }
 
