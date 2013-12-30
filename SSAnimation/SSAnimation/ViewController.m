@@ -70,13 +70,25 @@
     SSSpawn *spawnActio = [SSSpawn actions:[SSMove actionWithDuration:4 from:testView.center to:CGPointMake(self.view.center.x, self.view.center.y - 200)],[SSScale actionWithDuration:4 scale:1.2],[SSRotate actionWithDuration:4 degree:90], nil];
     */
     SSSpawn *spawnActio = [SSSpawn actionWithArray:acs];
-    
-    
     [testView runAction:spawnActio];
 }
 - (IBAction)clickMoveBtn:(id)sender {
-    [testView runAction:[SSMove actionWithDuration:4 from:testView.center to:CGPointMake(testView.center.x, testView.center.y - 200)]];
+    
+    SSMove *moveAct = [SSMove actionWithDuration:4 from:testView.center to:CGPointMake(testView.center.x, testView.center.y-200)];
+    NSLog(@"move center = %@", NSStringFromCGPoint(testView.center));
+    [testView runAction:moveAct];
+    [self performSelector:@selector(abc:) withObject:@[testView, moveAct] afterDelay:2];
+   
+//    [testView runAction:[SSMove actionWithDuration:4 from:testView.center to:CGPointMake(testView.center.x, testView.center.y - 200)]];
 }
+
+- (void)abc:(NSArray *)arr
+{
+    UIView * tes1tView = arr[0];
+    id act = arr[1];
+    [tes1tView stopAction:act];
+}
+
 - (IBAction)clickRotateBtn:(id)sender {
     [testView runAction:[SSRotate actionWithDuration:4 degree:45]];
 }

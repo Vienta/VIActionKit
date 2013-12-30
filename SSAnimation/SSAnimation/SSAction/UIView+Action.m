@@ -21,7 +21,11 @@
 - (void)stopAllActions
 {
     [[SSActionManager sharedSSActionManager] removeAllActionsFromTarget:self];
-    [self.layer removeAllAnimations];
+}
+
+- (void)stopAction:(SSAction *)action
+{
+    [[SSActionManager sharedSSActionManager] removeAction:action fromTaget:self];
 }
 
 @end

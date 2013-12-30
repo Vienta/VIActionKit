@@ -19,7 +19,6 @@
         _sharedSSActionManager = [[self alloc] init];
     });
     return _sharedSSActionManager;
-
 }
 
 - (void)addAction:(SSAction *)action target:(id)target
@@ -27,6 +26,7 @@
     NSAssert(action != nil, @"Action can not be nil");
     NSAssert(target != nil, @"Target can not be nil");
     
+    NSString *actionKey = [NSString stringWithFormat:@"%@%@",[target class],[NSNumber numberWithUnsignedLong:[action hash]]];
     UIView *tTarget = (id)target;
     
     [CATransaction begin];
@@ -35,7 +35,8 @@
         NSLog(@"animation complete");
         NSLog(@"tTaget = %@ tTaget.layer = %@", tTarget, tTarget.layer);
     }];
-    [tTarget.layer addAnimation:action forKey:nil];
+    [tTarget.layer addAnimation:action forKey:actionKey];
+    
     [CATransaction commit];
 }
 
@@ -44,9 +45,31 @@
     NSAssert(target != nil, @"Target can not be nil");
     
     UIView *tTarget = (id)target;
-    
     [tTarget.layer removeAllAnimations];
 }
+
+- (void)removeAction:(SSAction *)action fromTaget:(id)target
+{
+    if (!action) {
+        return;
+    }
+    
+    NSString *actionKey = [NSString stringWithFormat:@"%@%@",[target class],[NSNumber numberWithUnsignedLong:[action hash]]];
+    UIView *tTarget = (id)target;
+    
+    CALayer *pl = [tTarget.layer presentationLayer];
+    CGPoint position = pl.position;
+    CGRect scalebounds = pl.bounds;
+    CGFloat opacity = pl.opacity;
+    CGFloat rotationAngle = [[pl valueForKeyPath:@"transform.rotation.z"] floatValue];
+    tTarget.center = position;
+    tTarget.bounds = scalebounds;
+    tTarget.layer.opacity = opacity;
+    tTarget.transform = CGAffineTransformMakeRotation(rotationAngle * M_PI / 180.0);
+    
+    [tTarget.layer removeAnimationForKey:actionKey];
+}
+
 
 void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
     NSMutableArray *bezierPoints = (__bridge NSMutableArray *)info;
