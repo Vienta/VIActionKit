@@ -101,9 +101,18 @@
 
 - (IBAction)clickSameTimeBtn:(id)sender
 {
-    [testView runAction:[SSMove actionWithDuration:4 from:testView.center to:CGPointMake(self.view.center.x, self.view.center.y - 200)]];
-    [testView runAction:[SSScale actionWithDuration:4 scale:1.2]];
-    [testView runAction:[SSRotate actionWithDuration:4 degree:90]];
+//    [testView runAction:[SSMove actionWithDuration:4 from:testView.center to:CGPointMake(self.view.center.x, self.view.center.y - 200)]];
+//    [testView runAction:[SSScale actionWithDuration:4 scale:1.2]];
+//    [testView runAction:[SSRotate actionWithDuration:4 degree:90]];
+    
+    NSArray *acs = @[[SSMove actionWithDuration:4 from:testView.center to:CGPointMake(self.view.center.x, self.view.center.y - 200)],[SSScale actionWithDuration:4 scale:1.2],[SSRotate actionWithDuration:4 degree:90]];
+    /*
+    SSSpawn *spawnActio = [SSSpawn actions:[SSMove actionWithDuration:4 from:testView.center to:CGPointMake(self.view.center.x, self.view.center.y - 200)],[SSScale actionWithDuration:4 scale:1.2],[SSRotate actionWithDuration:4 degree:90], nil];
+    */
+    SSSpawn *spawnActio = [SSSpawn actionWithArray:acs];
+    
+    
+    [testView runAction:spawnActio];
 }
 - (IBAction)clickMoveBtn:(id)sender {
     [testView runAction:[SSMove actionWithDuration:4 from:testView.center to:CGPointMake(testView.center.x, testView.center.y - 200)]];

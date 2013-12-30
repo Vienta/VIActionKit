@@ -150,15 +150,6 @@
 
 + (id)actions:(SSAction *)action1, ... NS_REQUIRES_NIL_TERMINATION;
 + (id)actionWithArray: (NSArray*) arrayOfActions;
-
-@end
-
-
-@interface SSSpawn : SSAction
-
-+ (id)actions:(SSAction *)action1, ... NS_REQUIRES_NIL_TERMINATION;
-+ (id)actionWithArray: (NSArray*) arrayOfActions;
-
 @end
 
 @interface SSRepeat : SSAction
@@ -170,9 +161,12 @@
 @end
 
 
+@interface SSSpawn : SSAction
 
++ (id)actions:(SSAction *)action1, ... NS_REQUIRES_NIL_TERMINATION;
++ (id)actionWithArray: (NSArray*) arrayOfActions;
 
-
+@end
 
 
 

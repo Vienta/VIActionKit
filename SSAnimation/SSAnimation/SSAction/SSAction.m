@@ -281,6 +281,22 @@
     
     return [[self alloc] initWithDuration:totalDuration actions:actions];
 }
++ (id)actionWithArray:(NSArray *)arrayOfActions
+{
+    NSMutableArray *actions = [NSMutableArray arrayWithCapacity:0];
+    CFTimeInterval totolDuration = 0;
+    
+    for (int idx = 0; idx < [arrayOfActions count]; idx++) {
+        SSAction *eachaction = (SSAction *)arrayOfActions[idx];
+        eachaction.beginTime -= CACurrentMediaTime();
+        eachaction.fillMode = kCAFillModeBackwards;
+        eachaction.removedOnCompletion = NO;
+        [actions addObject:eachaction];
+        totolDuration += eachaction.duration + eachaction.beginTime;
+    }
+    
+    return [[self alloc] initWithDuration:totolDuration actions:actions];
+}
 
 - (id)initWithDuration:(CFTimeInterval)duration actions:(NSMutableArray *)actions
 {
@@ -295,25 +311,11 @@
     return self;
 }
 
-+ (id)actionWithArray:(NSArray *)arrayOfActions
-{
-    NSMutableArray *actions = [NSMutableArray arrayWithCapacity:0];
-    CFTimeInterval totolDuration = 0;
-    for (int idx = 0; idx < [arrayOfActions count]; idx++) {
-        SSAction *eachAction = arrayOfActions[idx];
-        eachAction.beginTime = eachAction.beginTime - CACurrentMediaTime() + totolDuration;
-        eachAction.fillMode = kCAFillModeForwards;
-        eachAction.removedOnCompletion = NO;
-        [actions addObject:eachAction];
-        totolDuration += eachAction.duration + eachAction.beginTime;
-    }
-    return [[self alloc] initWithDuration:totolDuration actions:actions];
-}
-
 @end
 
 
 @implementation SSSpawn
+
 
 + (id)actions:(SSAction *)action1, ...
 {
