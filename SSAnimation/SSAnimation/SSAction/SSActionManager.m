@@ -33,7 +33,8 @@
     [CATransaction setDisableActions:YES];
     [CATransaction setCompletionBlock:^{
         NSLog(@"animation complete");
-        NSLog(@"tTaget = %@ tTaget.layer = %@", tTarget, tTarget.layer);
+        [self decorateTarget:target];
+        [tTarget.layer removeAnimationForKey:actionKey];
     }];
     [tTarget.layer addAnimation:action forKey:actionKey];
     
@@ -56,18 +57,25 @@
     
     NSString *actionKey = [NSString stringWithFormat:@"%@%@",[target class],[NSNumber numberWithUnsignedLong:[action hash]]];
     UIView *tTarget = (id)target;
-    
-    CALayer *pl = [tTarget.layer presentationLayer];
-    CGPoint position = pl.position;
-    CGRect scalebounds = pl.bounds;
-    CGFloat opacity = pl.opacity;
-    CGFloat rotationAngle = [[pl valueForKeyPath:@"transform.rotation.z"] floatValue];
+    [self decorateTarget:target];
+    [tTarget.layer removeAnimationForKey:actionKey];
+}
+
+- (void)decorateTarget:(id)target
+{
+    UIView *tTarget = (id)target;
+    CALayer *tTargetPresentLayer = [tTarget.layer presentationLayer];
+    CGPoint position = tTargetPresentLayer.position;
+    CGRect scalebounds = tTargetPresentLayer.bounds;
+    CGFloat opacity = tTargetPresentLayer.opacity;
+    CGFloat rotationAngle = [[tTargetPresentLayer valueForKeyPath:@"transform.rotation.z"] floatValue];
+    CGFloat scaleX = [[tTargetPresentLayer valueForKeyPath:@"transform.scale.x"] floatValue];
+    CGFloat scaleY = [[tTargetPresentLayer valueForKeyPath:@"transform.scale.y"] floatValue];
     tTarget.center = position;
     tTarget.bounds = scalebounds;
     tTarget.layer.opacity = opacity;
     tTarget.transform = CGAffineTransformMakeRotation(rotationAngle * M_PI / 180.0);
-    
-    [tTarget.layer removeAnimationForKey:actionKey];
+    tTarget.transform = CGAffineTransformMakeScale(scaleX, scaleY);
 }
 
 
