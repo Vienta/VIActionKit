@@ -33,6 +33,7 @@
     [CATransaction setDisableActions:YES];
     [CATransaction setCompletionBlock:^{
         NSLog(@"animation complete");
+        NSLog(@"tTaget = %@ tTaget.layer = %@", tTarget, tTarget.layer);
     }];
     [tTarget.layer addAnimation:action forKey:nil];
     [CATransaction commit];

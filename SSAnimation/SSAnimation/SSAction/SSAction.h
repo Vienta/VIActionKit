@@ -82,7 +82,6 @@
 - (id)initWithDuration:(CFTimeInterval)duration scaleY:(float)sy;
 
 
-
 @end
 
 @interface SSFade : SSAction
@@ -103,7 +102,7 @@
 @interface SSFadeIn : SSAction
 
 /**
- *	fade in 透明度 0->1
+ *	fade in 透明度 current opactiy->1
  *
  *	@param	duration	时间
  *
@@ -118,7 +117,7 @@
 @interface SSFadeOut : SSAction
 
 /**
- *	fade out 透明度 1->0
+ *	fade out 透明度 current opacity->0
  *
  *	@param	duration	时间
  *
@@ -136,7 +135,7 @@
 /**
  *	delaytime 延迟时间
  *
- *	@param	duration	时间
+ *	@param	duration 时间
  *
  *	@return	action
  */
@@ -150,8 +149,26 @@
 @interface SSSequence : SSAction
 
 + (id)actions:(SSAction *)action1, ... NS_REQUIRES_NIL_TERMINATION;
++ (id)actionWithArray: (NSArray*) arrayOfActions;
 
 @end
+
+
+@interface SSSpawn : SSAction
+
++ (id)actions:(SSAction *)action1, ... NS_REQUIRES_NIL_TERMINATION;
++ (id)actionWithArray: (NSArray*) arrayOfActions;
+
+@end
+
+@interface SSRepeat : SSAction
+
++ (id)actionWithAction:(SSAction *)action times:(NSUInteger)times;
+
+- (id)initWithAction:(SSAction *)action times:(NSUInteger)times;
+
+@end
+
 
 
 

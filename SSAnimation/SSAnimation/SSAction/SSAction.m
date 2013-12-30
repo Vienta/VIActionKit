@@ -1,4 +1,4 @@
-//
+    //
 //  SSAction.m
 //  SSAnimation
 //
@@ -192,7 +192,6 @@
 {
     if (self = [super init]) {
         CABasicAnimation *fadeInAnimation = [CABasicAnimation animationWithKeyPath:@"opacity"];
-        fadeInAnimation.fromValue = @.0;
         fadeInAnimation.toValue = @1.0;
         fadeInAnimation.beginTime = CACurrentMediaTime();
         fadeInAnimation.duration = duration;
@@ -216,7 +215,6 @@
 {
     if (self = [super init]) {
         CABasicAnimation *fadeOutAnimation = [CABasicAnimation animationWithKeyPath:@"opacity"];
-        fadeOutAnimation.fromValue = @1.0;
         fadeOutAnimation.toValue = @.0;
         fadeOutAnimation.beginTime = CACurrentMediaTime();
         fadeOutAnimation.duration = duration;
@@ -297,9 +295,108 @@
     return self;
 }
 
++ (id)actionWithArray:(NSArray *)arrayOfActions
+{
+    NSMutableArray *actions = [NSMutableArray arrayWithCapacity:0];
+    CFTimeInterval totolDuration = 0;
+    for (int idx = 0; idx < [arrayOfActions count]; idx++) {
+        SSAction *eachAction = arrayOfActions[idx];
+        eachAction.beginTime = eachAction.beginTime - CACurrentMediaTime() + totolDuration;
+        eachAction.fillMode = kCAFillModeForwards;
+        eachAction.removedOnCompletion = NO;
+        [actions addObject:eachAction];
+        totolDuration += eachAction.duration + eachAction.beginTime;
+    }
+    return [[self alloc] initWithDuration:totolDuration actions:actions];
+}
+
 @end
 
 
+@implementation SSSpawn
 
++ (id)actions:(SSAction *)action1, ...
+{
+    NSMutableArray *actions = [NSMutableArray arrayWithCapacity:0];
+    CFTimeInterval maxDuration = 0;
+    SSAction *eachaction;
+    
+    va_list params;
+    if (action1) {
+        action1.beginTime = action1.beginTime - CACurrentMediaTime();
+        action1.fillMode = kCAFillModeForwards;
+        action1.removedOnCompletion = NO;
+        maxDuration = action1.duration + action1.beginTime;
+        [actions addObject:action1];
+        
+        va_start(params, action1);
+        
+        while ((eachaction = va_arg(params, id))) {
+            eachaction.beginTime = eachaction.beginTime - CACurrentMediaTime();
+            eachaction.fillMode = kCAFillModeForwards;
+            eachaction.removedOnCompletion = NO;
+            [actions addObject:eachaction];
+            if (eachaction.duration >= maxDuration) {
+                maxDuration = eachaction.duration;
+            }
+        }
+        
+        va_end(params);
+    }
+    
+    return [[self alloc] initWithDuration:maxDuration actions:actions];
+}
+
+- (id)initWithDuration:(CFTimeInterval)duration actions:(NSMutableArray *)actions
+{
+    if (self = [super init]) {
+        CAAnimationGroup *actionGroup = [CAAnimationGroup animation];
+        [actionGroup setDuration:duration];
+        [actionGroup setAnimations:actions];
+        actionGroup.fillMode = kCAFillModeForwards;
+        actionGroup.removedOnCompletion = NO;
+        self = (id)actionGroup;
+    }
+    return self;
+}
+
++ (id)actionWithArray:(NSArray *)arrayOfActions
+{
+    NSMutableArray *actions = [NSMutableArray arrayWithCapacity:0];
+    CFTimeInterval maxDuration = 0;
+    for (int idx = 0; idx < [arrayOfActions count]; idx++) {
+        SSAction *eachAction = arrayOfActions[idx];
+        eachAction.beginTime -= CACurrentMediaTime();
+        if (eachAction.duration > maxDuration) {
+            maxDuration = eachAction.duration;
+        }
+        eachAction.fillMode = kCAFillModeForwards;
+        eachAction.removedOnCompletion = NO;
+        [actions addObject:eachAction];
+    }
+    
+    return [[self alloc] initWithDuration:maxDuration actions:actions];
+}
+
+
+@end
+
+@implementation SSRepeat
+
++ (id)actionWithAction:(SSAction *)action times:(NSUInteger)times
+{
+    return [[self alloc] initWithAction:action times:times];
+}
+
+
+- (id)initWithAction:(SSAction *)action times:(NSUInteger)times
+{
+    if (self = [super init]) {
+        action.repeatCount = times;
+    }
+    return self;
+}
+
+@end
 
 
