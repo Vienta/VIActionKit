@@ -7,6 +7,7 @@
 //
 
 #import "SSActionManager.h"
+#import "UIView+Action.h"
 
 @implementation SSActionManager
 
@@ -36,6 +37,7 @@
         [self decorateTarget:target];
         [tTarget.layer removeAnimationForKey:actionKey];
     }];
+    
     [tTarget.layer addAnimation:action forKey:actionKey];
     
     [CATransaction commit];
@@ -62,21 +64,44 @@
     [tTarget.layer removeAnimationForKey:actionKey];
 }
 
+- (void)pauseActionFromTarget:(id)target;
+{
+    UIView *tTarget = (id)target;
+    CFTimeInterval pausedTime = [tTarget.layer convertTime:CACurrentMediaTime() fromLayer:nil];
+    tTarget.layer.speed = .0;
+    tTarget.layer.timeOffset = pausedTime;
+}
+
+- (void)resumeActionFromTarget:(id)target
+{
+    UIView *tTarget = (id)target;
+    CFTimeInterval pauseTime = [tTarget.layer timeOffset];
+    tTarget.layer.speed = 1.0;
+    tTarget.layer.timeOffset = .0;
+    tTarget.layer.beginTime = .0;
+    CFTimeInterval timeSincePause = [tTarget.layer convertTime:CACurrentMediaTime() fromLayer:nil] - pauseTime;
+    tTarget.layer.beginTime = timeSincePause;
+}
+
 - (void)decorateTarget:(id)target
 {
     UIView *tTarget = (id)target;
     CALayer *tTargetPresentLayer = [tTarget.layer presentationLayer];
     CGPoint position = tTargetPresentLayer.position;
-    CGRect scalebounds = tTargetPresentLayer.bounds;
     CGFloat opacity = tTargetPresentLayer.opacity;
     CGFloat rotationAngle = [[tTargetPresentLayer valueForKeyPath:@"transform.rotation.z"] floatValue];
     CGFloat scaleX = [[tTargetPresentLayer valueForKeyPath:@"transform.scale.x"] floatValue];
     CGFloat scaleY = [[tTargetPresentLayer valueForKeyPath:@"transform.scale.y"] floatValue];
     tTarget.center = position;
-    tTarget.bounds = scalebounds;
     tTarget.layer.opacity = opacity;
-    tTarget.transform = CGAffineTransformMakeRotation(rotationAngle * M_PI / 180.0);
-    tTarget.transform = CGAffineTransformMakeScale(scaleX, scaleY);
+    NSLog(@"rotation angle %f", rotationAngle);
+    NSLog(@"scale.x %f", scaleX);
+    NSLog(@"scale.y %f", scaleY);
+    NSLog(@"rotation bounds %@", NSStringFromCGRect(tTargetPresentLayer.bounds));
+    NSLog(@"tTarget.bounds %@",NSStringFromCGRect(tTarget.bounds));
+    tTarget.transform = CGAffineTransformMakeRotation(rotationAngle);
+    tTarget.bounds = CGRectMake(0, 0, tTarget.bounds.size.width * scaleX, tTarget.bounds.size.height * scaleY);
+    NSLog(@"tHHHHHHH bound %@", NSStringFromCGRect(tTarget.bounds));
 }
 
 

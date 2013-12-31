@@ -28,4 +28,14 @@
     [[SSActionManager sharedSSActionManager] removeAction:action fromTaget:self];
 }
 
+- (void)pauseActions
+{
+    [[SSActionManager sharedSSActionManager] pauseActionFromTarget:self];
+}
+
+- (void)resumeActions
+{
+    [[SSActionManager sharedSSActionManager] resumeActionFromTarget:self];
+}
+
 @end
