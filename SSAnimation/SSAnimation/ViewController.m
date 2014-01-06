@@ -66,15 +66,12 @@
 }
 - (IBAction)clickMoveBtn:(id)sender {
     SSMove *moveAct = [SSMove actionWithDuration:4 from:testView.center to:CGPointMake(testView.center.x, testView.center.y + 100)];
-//    [testView runAction:moveAct];
     [testView runAction:[SSRepeat actionWithAction:moveAct times:3]];
 }
 
 - (void)abc:(NSArray *)arr
 {
-    UIView * tes1tView = arr[0];
-    id act = arr[1];
-    [tes1tView stopAction:act];
+    
 }
 
 - (IBAction)clickRotateBtn:(id)sender {
