@@ -8,6 +8,14 @@
 
 #import <QuartzCore/QuartzCore.h>
 
+@interface CAAnimation (times)
+
+@property (nonatomic, assign) NSInteger times;
+
+@end
+
+
+
 @interface SSAction : CAAnimation
 
 @end

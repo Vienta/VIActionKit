@@ -8,11 +8,18 @@
 
 #import "SSAction.h"
 
+
+@implementation CAAnimation (times)
+
+@dynamic times;
+
+@end
+
 @implementation SSAction
 
 - (id)init
 {
-    if (self = [super init]) {
+    if ((self = [CAAnimation animation])) {
         
     }
     return self;
@@ -43,6 +50,7 @@
         CGPathRelease(path);
         
         self = (id)moveAnimation;
+        
     }
     return self;
 }
@@ -394,6 +402,8 @@
 - (id)initWithAction:(SSAction *)action times:(NSUInteger)times
 {
     if (self = [super init]) {
+        self = (id)action;
+        self.times = times;
         action.repeatCount = times;
     }
     return self;

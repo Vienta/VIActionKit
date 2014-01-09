@@ -17,4 +17,10 @@
 
 - (void)removeAllActionsFromTarget:(id)target;
 
+- (void)removeAction:(SSAction *)action fromTaget:(id)target;
+
+- (void)pauseActionFromTarget:(id)target;
+
+- (void)resumeActionFromTarget:(id)target;
+
 @end

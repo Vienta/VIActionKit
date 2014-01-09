@@ -45,12 +45,8 @@
 }
 - (IBAction)clickSequenceBtn:(id)sender
 {
-    
-    [testView runAction:[SSSequence actions:
-                         [SSMove actionWithDuration:4 from:testView.center to:CGPointMake(self.view.center.x, self.view.center.y - 100)],
-                         [SSRotate actionWithDuration:4 degree:45],
-                         [SSFadeOut actionWithDuration:4],
-                         [SSFadeIn actionWithDuration:4],
+    [testView runAction:[SSSequence actions:[SSMove actionWithDuration:4 from:testView.center to:CGPointMake(self.view.center.x, self.view.center.y - 100)],
+                         [SSRotate actionWithDuration:4 degree:45],[SSFadeOut actionWithDuration:4],[SSFadeIn actionWithDuration:4],
                          [SSDelayTime actionWithDuration:4],
                          [SSScale actionWithDuration:4 scale:1.5],
                          [SSScale actionWithDuration:4 scale:1],
@@ -61,22 +57,23 @@
 
 - (IBAction)clickSameTimeBtn:(id)sender
 {
-//    [testView runAction:[SSMove actionWithDuration:4 from:testView.center to:CGPointMake(self.view.center.x, self.view.center.y - 200)]];
-//    [testView runAction:[SSScale actionWithDuration:4 scale:1.2]];
-//    [testView runAction:[SSRotate actionWithDuration:4 degree:90]];
-    
     NSArray *acs = @[[SSMove actionWithDuration:4 from:testView.center to:CGPointMake(self.view.center.x, self.view.center.y - 200)],[SSScale actionWithDuration:4 scale:1.2],[SSRotate actionWithDuration:4 degree:90]];
     /*
     SSSpawn *spawnActio = [SSSpawn actions:[SSMove actionWithDuration:4 from:testView.center to:CGPointMake(self.view.center.x, self.view.center.y - 200)],[SSScale actionWithDuration:4 scale:1.2],[SSRotate actionWithDuration:4 degree:90], nil];
     */
     SSSpawn *spawnActio = [SSSpawn actionWithArray:acs];
-    
-    
     [testView runAction:spawnActio];
 }
 - (IBAction)clickMoveBtn:(id)sender {
-    [testView runAction:[SSMove actionWithDuration:4 from:testView.center to:CGPointMake(testView.center.x, testView.center.y - 200)]];
+    SSMove *moveAct = [SSMove actionWithDuration:4 from:testView.center to:CGPointMake(testView.center.x, testView.center.y + 100)];
+    [testView runAction:[SSRepeat actionWithAction:moveAct times:3]];
 }
+
+- (void)abc:(NSArray *)arr
+{
+    
+}
+
 - (IBAction)clickRotateBtn:(id)sender {
     [testView runAction:[SSRotate actionWithDuration:4 degree:45]];
 }
@@ -84,7 +81,7 @@
     [testView runAction:[SSScale actionWithDuration:4 scale:2]];
 }
 - (IBAction)clickScale1Btn:(id)sender {
-    [testView runAction:[SSScale actionWithDuration:4 scale:.5]];
+    [testView runAction:[SSScale actionWithDuration:4 scale:0.5]];
 }
 - (IBAction)clickFadeBtn:(id)sender {
     [testView runAction:[SSFade actionDuration:4 opacity:.5]];
@@ -94,6 +91,14 @@
 }
 - (IBAction)clickFadeOutBtn:(id)sender {
     [testView runAction:[SSFadeOut actionWithDuration:4]];
+}
+- (IBAction)clickPauseBtn:(id)sender
+{
+    [testView pauseActions];
+}
+- (IBAction)clickResumeBtn:(id)sender
+{
+    [testView resumeActions];
 }
 
 - (void)didReceiveMemoryWarning
