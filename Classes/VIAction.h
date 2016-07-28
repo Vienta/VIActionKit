@@ -16,12 +16,16 @@
 
 
 
-@interface SSAction : CAAnimation
+@interface VIAction : CAAnimation
+
++ (CABasicAnimation *)basicAnimationWithKeyPath:(NSString *)keyPath fillMode:(NSString *)fillMode;
++ (CABasicAnimation *)basicAnimationWithKeyPath:(NSString *)keyPath;
++ (CAKeyframeAnimation *)keyframeAnimationWithKeyPath:(NSString *)keyPath;
 
 @end
 
 
-@interface SSMove : SSAction
+@interface VIMove : VIAction
 
 /**
  *	move 移动
@@ -34,7 +38,6 @@
  */
 + (id)actionWithDuration:(CFTimeInterval)duration from:(CGPoint)fp to:(CGPoint)tp;
 
-- (id)initWithDuration:(CFTimeInterval)duration from:(CGPoint)fp to:(CGPoint)tp;
 
 
 /**
@@ -47,12 +50,12 @@
  */
 + (id)actionWithDuration:(CFTimeInterval)duration path:(CGPathRef)path;
 
-- (id)initWithDuration:(CFTimeInterval)duration path:(CGPathRef)path;
+
 
 @end
 
 
-@interface SSRotate : SSAction
+@interface VIRotate : VIAction
 
 /**
  *	rotate 旋转
@@ -64,11 +67,10 @@
  */
 + (id)actionWithDuration:(CFTimeInterval)duration degree:(float)degree;
 
-- (id)initWithDuration:(CFTimeInterval)duration degree:(float)degree;
 
 @end
 
-@interface SSScale : SSAction
+@interface VIScale : VIAction
 
 /**
  *	scale 缩放
@@ -79,20 +81,14 @@
  */
 + (id)actionWithDuration:(CFTimeInterval)duration scale:(float)s;
 
-- (id)initWithDuration:(CFTimeInterval)duration scale:(float)s;
-
 + (id)actionWithDuration:(CFTimeInterval)duration scaleX:(float)sx;
 
-- (id)initWithDuration:(CFTimeInterval)duration scaleX:(float)sx;
-
 + (id)actionWithDuration:(CFTimeInterval)duration scaleY:(float)sy;
-
-- (id)initWithDuration:(CFTimeInterval)duration scaleY:(float)sy;
 
 
 @end
 
-@interface SSFade : SSAction
+@interface VIFade : VIAction
 
 /**
  *	fade 透明度
@@ -103,11 +99,10 @@
  */
 + (id)actionDuration:(CFTimeInterval)duration opacity:(float)op;
 
-- (id)initWithDuration:(CFTimeInterval)duration opacity:(float)op;
 
 @end
 
-@interface SSFadeIn : SSAction
+@interface VIFadeIn : VIAction
 
 /**
  *	fade in 透明度 current opactiy->1
@@ -118,11 +113,9 @@
  */
 + (id)actionWithDuration:(CFTimeInterval)duration;
 
-- (id)initWithDuration:(CFTimeInterval)duration;
-
 @end
 
-@interface SSFadeOut : SSAction
+@interface VIFadeOut : VIAction
 
 /**
  *	fade out 透明度 current opacity->0
@@ -133,12 +126,11 @@
  */
 + (id)actionWithDuration:(CFTimeInterval)duration;
 
-- (id)initWithDuration:(CFTimeInterval)duration;
 
 @end
 
 
-@interface SSDelayTime : SSAction
+@interface VIDelayTime : VIAction
 
 /**
  *	delaytime 延迟时间
@@ -149,29 +141,26 @@
  */
 + (id)actionWithDuration:(CFTimeInterval)duration;
 
-- (id)initWithDuration:(CFTimeInterval)duration;
 
 @end
 
 
-@interface SSSequence : SSAction
+@interface VISequence : VIAction
 
-+ (id)actions:(SSAction *)action1, ... NS_REQUIRES_NIL_TERMINATION;
++ (id)actions:(VIAction *)action1, ... NS_REQUIRES_NIL_TERMINATION;
 + (id)actionWithArray: (NSArray*) arrayOfActions;
 @end
 
-@interface SSRepeat : SSAction
+@interface VIRepeat : VIAction
 
-+ (id)actionWithAction:(SSAction *)action times:(NSUInteger)times;
-
-- (id)initWithAction:(SSAction *)action times:(NSUInteger)times;
++ (id)actionWithAction:(VIAction *)action times:(NSUInteger)times;
 
 @end
 
 
-@interface SSSpawn : SSAction
+@interface VISpawn : VIAction
 
-+ (id)actions:(SSAction *)action1, ... NS_REQUIRES_NIL_TERMINATION;
++ (id)actions:(VIAction *)action1, ... NS_REQUIRES_NIL_TERMINATION;
 + (id)actionWithArray: (NSArray*) arrayOfActions;
 
 @end

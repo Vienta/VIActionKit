@@ -6,13 +6,13 @@
 //  Copyright (c) 2013年 Candy. All rights reserved.
 //
 
-#import "SSActionManager.h"
+#import "VIActionManager.h"
 #import "UIView+Action.h"
 
-@implementation SSActionManager
+@implementation VIActionManager
 
 
-+ (instancetype)sharedSSActionManager
++ (instancetype)sharedInstance
 {
     static dispatch_once_t pred = 0;
     __strong static id _sharedSSActionManager = nil;
@@ -22,7 +22,7 @@
     return _sharedSSActionManager;
 }
 
-- (void)addAction:(SSAction *)action target:(id)target
+- (void)addAction:(VIAction *)action target:(id)target
 {
     NSAssert(action != nil, @"Action can not be nil");
     NSAssert(target != nil, @"Target can not be nil");
@@ -52,7 +52,7 @@
     [tTarget.layer removeAllAnimations];
 }
 
-- (void)removeAction:(SSAction *)action fromTaget:(id)target
+- (void)removeAction:(VIAction *)action fromTaget:(id)target
 {
     if (!action) {
         return;
@@ -94,11 +94,13 @@
     CGFloat scaleY = [[tTargetPresentLayer valueForKeyPath:@"transform.scale.y"] floatValue];
     tTarget.center = position;
     tTarget.layer.opacity = opacity;
+#if DEBUG
     NSLog(@"rotation angle %f", rotationAngle);
     NSLog(@"scale.x %f", scaleX);
     NSLog(@"scale.y %f", scaleY);
     NSLog(@"rotation bounds %@", NSStringFromCGRect(tTargetPresentLayer.bounds));
     NSLog(@"tTarget.bounds %@",NSStringFromCGRect(tTarget.bounds));
+#endif
     tTarget.transform = CGAffineTransformMakeRotation(rotationAngle);
     tTarget.bounds = CGRectMake(0, 0, tTarget.bounds.size.width * scaleX, tTarget.bounds.size.height * scaleY);
     NSLog(@"tHHHHHHH bound %@", NSStringFromCGRect(tTarget.bounds));

@@ -7,12 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "SSAction.h"
+#import "VIAction.h"
 
 @interface UIView (Action)
-- (id)runAction:(SSAction *)action;
+- (id)runAction:(VIAction *)action;
 - (void)stopAllActions;
-- (void)stopAction:(SSAction *)action;
+- (void)stopAction:(VIAction *)action;
 - (void)pauseActions;
 - (void)resumeActions;
 

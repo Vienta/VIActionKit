@@ -7,17 +7,17 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "SSAction.h"
+#import "VIAction.h"
 
-@interface SSActionManager : NSObject
+@interface VIActionManager : NSObject
 
-+ (instancetype)sharedSSActionManager;
++ (instancetype)sharedInstance;
 
-- (void)addAction:(SSAction *)action target:(id)target;
+- (void)addAction:(VIAction *)action target:(id)target;
 
 - (void)removeAllActionsFromTarget:(id)target;
 
-- (void)removeAction:(SSAction *)action fromTaget:(id)target;
+- (void)removeAction:(VIAction *)action fromTaget:(id)target;
 
 - (void)pauseActionFromTarget:(id)target;
 
