@@ -15,42 +15,79 @@
 ## Usage
 
 
-### SSMove 
+### VIMove 
 Move from one point to another, and also you can desgn your own path.
 
     + (id)actionWithDuration:(CFTimeInterval)duration from:(CGPoint)fp to:(CGPoint)tp;
     + (id)actionWithDuration:(CFTimeInterval)duration path:(CGPathRef)path;
     
-In demo, you can touch move button:
+### VIFade
 
-    [testView runAction:[SSMove actionWithDuration:4 from:testView.center to:CGPointMake(testView.center.x, testView.center.y - 200)]];
-    
-testView will move from <i>testView.center</i> to  <i>CGPointMake(testView.center.x, testView.center.y - 200)</i>.
+Change view's opacity.
 
-### SSFade SSFadeIn SSFadeOut
-Change layer's opacity.In demo, you can touch Fade FadeIn and Fadeout Buttons.
+	@interface VIFade : VIAction
 
-### SSScale
-Change layer's scale.
+	+ (id)actionDuration:(CFTimeInterval)duration opacity:(float)op;
 
-### SSDelayTime
+	@end
+	
+	@interface VIFadeIn : VIAction
+	
+	+ (id)actionWithDuration:(CFTimeInterval)duration;
+	
+	@end
+	
+	@interface VIFadeOut : VIAction
+	
+	+ (id)actionWithDuration:(CFTimeInterval)duration;
+		
+	@end
+
+
+### VIScale
+
+You can scale a view throw below methods.
+
+	+ (id)actionWithDuration:(CFTimeInterval)duration scale:(float)s;
+
+	+ (id)actionWithDuration:(CFTimeInterval)duration scaleX:(float)sx;
+
+	+ (id)actionWithDuration:(CFTimeInterval)duration scaleY:(float)sy;
+
+### VIRotate
+
+Rotate view action.
+
+	@interface VIRotate : VIAction
+	
+	/**
+	 *	rotate 旋转
+	 *
+	 *	@param	duration	时间
+	 *	@param	degree	角度 example:45 表示顺时针45°旋转 145 表示逆时针45°旋转
+	+ (id)actionWithDuration:(CFTimeInterval)duration degree:(float)degree;
+
+
+### VIDelayTime
 Use this method:
 
-    [SSDelayTime actionWithDuration:duration],
+    [VIDelayTime actionWithDuration:duration],
     
-you can control the animation's delay time.
+You can control the animation's delay time.
 
-### SSSequence
-Actions in sequence would action one by one.In demo, you can touch Sequence button.
+### VISequence
 
-    [testView runAction:[SSSequence actions:
+`VIActionKit` support sequence actions.
+
+
+    [demoView runAction:[SSSequence actions:
                          [SSMove actionWithDuration:4 from:testView.center to:CGPointMake(self.view.center.x, self.view.center.y - 100)],
                          [SSRotate actionWithDuration:4 degree:45],
                          [SSDelayTime actionWithDuration:4],
                          [SSScale actionWithDuration:4 scale:1.5],
                          nil]];
                          
-In above method,first action is move, then rotate, and then delaytime,scale at last.
+In above method,first action is move, then rotate, and then delaytime,scale at last.All thoes actions happened in sequence.
 
     
 
